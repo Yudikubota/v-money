@@ -3,6 +3,8 @@
          :value="formattedValue"
          @change="change"
          v-money="{precision, decimal, thousands, prefix, suffix}"
+         v-on="listeners"
+         v-bind="attrs"
          class="v-money" />
 </template>
 
@@ -68,6 +70,17 @@ export default {
   methods: {
     change (evt) {
       this.$emit('input', this.masked ? evt.target.value : unformat(evt.target.value, this.precision))
+    }
+  },
+
+  computed: {
+    listeners() {
+        const { input, change, ...listeners } = this.$listeners
+        return listeners
+    },
+    attrs() {
+        const { input, ...attrs } = this.$attrs
+        return { ...attrs }
     }
   }
 }
